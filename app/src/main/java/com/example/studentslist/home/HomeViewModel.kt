@@ -14,9 +14,11 @@ class HomeViewModel(val homeRepository: HomeRepository) : StudentViewModel() {
     val studentsLiveData = MutableLiveData<List<Student>>()
     val error = MutableLiveData<String>()
     init {
+        progressBarLiveData.value=true
         homeRepository.getStudents()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doFinally{progressBarLiveData.postValue(false)}
             .subscribe(object  : SingleObserver<List<Student>> {
                 override fun onSubscribe(d: Disposable) {
                     compositeDisposable.add(d)

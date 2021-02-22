@@ -25,6 +25,9 @@ class HomeActivity : StudentActivity() {
             studentAdapter.students = it as ArrayList<Student>
         }
 
+        homeViewModel.progressBarLiveData.observe(this){
+            setProgressIndicator(it)
+        }
         rv_main_students.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
 
         rv_main_students.adapter = studentAdapter
