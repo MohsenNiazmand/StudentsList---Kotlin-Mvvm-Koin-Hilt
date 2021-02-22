@@ -1,11 +1,16 @@
 package com.example.studentslist
 
 import android.app.Application
+import com.example.studentslist.addstudent.AddStudentViewModel
+import com.example.studentslist.data.repositories.AddStudentRepository
+import com.example.studentslist.data.repositories.AddStudentRepositoryImpl
 import com.example.studentslist.data.repositories.HomeRepository
 import com.example.studentslist.data.repositories.HomeRepositoryImpl
+import com.example.studentslist.data.repositories.sources.AddStudentRemoteDataSource
 import com.example.studentslist.data.repositories.sources.HomeRemoteDataSource
 import com.example.studentslist.home.HomeViewModel
 import com.example.studentslist.services.apiServiceInstance
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -23,8 +28,10 @@ class App:Application() {
             single { apiServiceInstance() }
             factory<HomeRepository> {
                 HomeRepositoryImpl(HomeRemoteDataSource(get() )) }
+            factory<AddStudentRepository> { AddStudentRepositoryImpl(AddStudentRemoteDataSource(get())) }
 
             viewModel { HomeViewModel(get()) }
+            viewModel { AddStudentViewModel(get()) }
 
         }
         startKoin {
