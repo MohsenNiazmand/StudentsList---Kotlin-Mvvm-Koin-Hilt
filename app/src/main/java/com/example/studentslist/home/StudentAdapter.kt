@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentslist.R
+import com.example.studentslist.common.implementSpringAnimationTrait
 import com.example.studentslist.data.Student
 
 
@@ -32,6 +33,10 @@ class StudentAdapter() : RecyclerView.Adapter<StudentAdapter.ViewHolder>() {
             courseTitleTv.text = student.course
             scoreTv.text = student.score.toString()
             firstCharacterTv.text = student.first_name.substring(0, 1)
+            itemView.implementSpringAnimationTrait()
+            itemView.setOnClickListener {
+
+            }
 
         }
 
