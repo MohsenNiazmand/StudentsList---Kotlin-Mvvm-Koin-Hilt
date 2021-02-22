@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StudentsList</string>
+    <string name="main_addStudent">Add Student</string>
 </resources>
