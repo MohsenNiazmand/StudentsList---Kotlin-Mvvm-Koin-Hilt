@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentsList">
-        <activity android:name=".AddStudentActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".addstudent.AddStudentActivity"></activity>
+        <activity android:name=".home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
