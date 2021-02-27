@@ -20,7 +20,12 @@ class HomeActivity : StudentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        homeViewModel.studentsLiveData.observe(this){
+
+        rv_main_students.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
+
+        rv_main_students.adapter = studentAdapter
+
+        homeViewModel.getStudent().observe(this){
             Timber.i(it.toString())
             studentAdapter.students = it as ArrayList<Student>
         }
@@ -28,10 +33,6 @@ class HomeActivity : StudentActivity() {
         homeViewModel.progressBarLiveData.observe(this){
             setProgressIndicator(it)
         }
-        rv_main_students.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL,false)
-
-        rv_main_students.adapter = studentAdapter
-
 
         fab_main_addNewStudent.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this, AddStudentActivity::class.java))
