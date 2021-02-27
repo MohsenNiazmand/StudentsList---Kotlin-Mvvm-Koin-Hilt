@@ -34,7 +34,7 @@ class App:Application() {
                 HomeRepositoryImpl(
                         HomeRemoteDataSource(get(),get())
                         ,HomeLocalDataSource(get())) }
-            factory<AddStudentRepository> { AddStudentRepositoryImpl(AddStudentRemoteDataSource(get())) }
+            factory<AddStudentRepository> { AddStudentRepositoryImpl(AddStudentRemoteDataSource(get(),get())) }
 
             viewModel { HomeViewModel(get()) }
             viewModel { AddStudentViewModel(get()) }

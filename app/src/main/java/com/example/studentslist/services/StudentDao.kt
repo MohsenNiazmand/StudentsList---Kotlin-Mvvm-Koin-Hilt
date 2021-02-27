@@ -11,8 +11,11 @@ import com.example.studentslist.data.Student
 interface StudentDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(student : List<Student>)
+    fun insertAll(student : List<Student>)
 
     @Query("select * from students ORDER BY id DESC")
     fun getAll(): LiveData<List<Student>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(student: Student)
 }
