@@ -1,6 +1,7 @@
 package com.example.studentslist.common
 
 
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 import androidx.dynamicanimation.animation.DynamicAnimation
@@ -8,6 +9,7 @@ import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import timber.log.Timber
 
+@SuppressLint("ClickableViewAccessibility")
 fun View.implementSpringAnimationTrait() {
     val scaleXAnim = SpringAnimation(this, DynamicAnimation.SCALE_X, 1.1f)
     val scaleYAnim = SpringAnimation(this, DynamicAnimation.SCALE_Y, 1.1f)

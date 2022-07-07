@@ -5,8 +5,9 @@ import com.example.studentslist.data.Student
 import com.example.studentslist.services.StudentDao
 import io.reactivex.Completable
 import io.reactivex.Single
+import javax.inject.Inject
 
-class HomeLocalDataSource(val studentDao: StudentDao):HomeDataSource {
+class HomeLocalDataSource @Inject constructor(val studentDao: StudentDao):HomeDataSource {
 
     override fun refreshStudents(): Completable {
         TODO("Not yet implemented")

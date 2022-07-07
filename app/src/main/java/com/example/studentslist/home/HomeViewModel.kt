@@ -5,14 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import com.example.studentslist.common.StudentViewModel
 import com.example.studentslist.data.Student
 import com.example.studentslist.data.repositories.HomeRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import io.reactivex.CompletableObserver
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
-
-class HomeViewModel(val homeRepository: HomeRepository) : StudentViewModel() {
+import javax.inject.Inject
+@HiltViewModel
+class HomeViewModel @Inject constructor(val homeRepository: HomeRepository) : StudentViewModel() {
     val error = MutableLiveData<String>()
     init {
         progressBarLiveData.value=true

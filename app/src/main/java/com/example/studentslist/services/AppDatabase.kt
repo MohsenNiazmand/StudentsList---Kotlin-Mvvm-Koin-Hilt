@@ -5,6 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.studentslist.data.Student
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
 
 @Database(entities = [Student::class],version = 1,exportSchema = false)
 abstract class AppDatabase:RoomDatabase() {

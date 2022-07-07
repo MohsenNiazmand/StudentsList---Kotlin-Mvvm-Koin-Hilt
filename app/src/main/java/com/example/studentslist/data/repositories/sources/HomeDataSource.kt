@@ -6,11 +6,6 @@ import io.reactivex.Completable
 
 interface HomeDataSource {
 
-
     fun refreshStudents(): Completable
-
     fun getStudents(): LiveData<List<Student>>
-
-
-
 }

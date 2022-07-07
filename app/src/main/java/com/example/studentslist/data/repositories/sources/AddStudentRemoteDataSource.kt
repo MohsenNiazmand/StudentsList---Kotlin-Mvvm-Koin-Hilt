@@ -5,8 +5,9 @@ import com.example.studentslist.services.ApiService
 import com.example.studentslist.services.StudentDao
 import com.google.gson.JsonObject
 import io.reactivex.Single
+import javax.inject.Inject
 
-class AddStudentRemoteDataSource(val apiService: ApiService, val studentDao: StudentDao):AddStudentDataSource {
+class AddStudentRemoteDataSource @Inject constructor(val apiService: ApiService, val studentDao: StudentDao):AddStudentDataSource {
     override fun save(firstName: String, lastName: String, course: String, score: String): Single<Student> =
             apiService.save(JsonObject().apply {
                 addProperty("first_name",firstName)

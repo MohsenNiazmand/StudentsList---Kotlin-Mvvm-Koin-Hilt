@@ -5,10 +5,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import com.example.studentslist.R
 import com.example.studentslist.common.StudentActivity
 import com.example.studentslist.data.Student
 import com.example.studentslist.home.HomeActivity
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -17,11 +19,14 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_student.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AddStudentActivity : StudentActivity() {
 
     val compositeDisposable = CompositeDisposable()
-    val addStudentViewModel: AddStudentViewModel by viewModel()
+    private val addStudentViewModel: AddStudentViewModel by viewModels()
+//    @Inject lateinit var addStudentViewModel:AddStudentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

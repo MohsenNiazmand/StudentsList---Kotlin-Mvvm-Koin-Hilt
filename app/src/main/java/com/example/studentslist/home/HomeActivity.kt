@@ -4,19 +4,25 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentslist.R
 import com.example.studentslist.addstudent.AddStudentActivity
 import com.example.studentslist.common.StudentActivity
 import com.example.studentslist.data.Student
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeActivity : StudentActivity() {
     val studentAdapter = StudentAdapter()
-    val homeViewModel:HomeViewModel by viewModel()
+//    @Inject lateinit var homeViewModel:HomeViewModel
+    private val homeViewModel : HomeViewModel by viewModels()
+//    val homeViewModel:HomeViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
