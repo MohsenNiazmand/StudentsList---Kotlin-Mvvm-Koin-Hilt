@@ -3,15 +3,16 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "com.example.studentslist"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -49,11 +50,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     def koin_version = "2.2.0"
     // Koin for Android
-    implementation "org.koin:koin-android:$koin_version"
-    // or Koin for Lifecycle scoping
-    implementation "org.koin:koin-android-scope:$koin_version"
-    // or Koin for Android Architecture ViewModel
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+//    implementation "org.koin:koin-android:$koin_version"
+//    // or Koin for Lifecycle scoping
+//    implementation "org.koin:koin-android-scope:$koin_version"
+//    // or Koin for Android Architecture ViewModel
+//    implementation "org.koin:koin-android-viewmodel:$koin_version"
 
     //retrofit
     implementation 'com.google.code.gson:gson:2.8.6'
@@ -72,5 +73,18 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
+    implementation 'com.google.dagger:hilt-android:2.43.2'
+    annotationProcessor 'com.google.dagger:hilt-compiler:2.43.2'
+    kapt "com.google.dagger:hilt-android-testing:2.42"
+    kapt "com.google.dagger:hilt-compiler:2.43.2"
+    implementation "androidx.activity:activity-ktx:1.5.1"
+    implementation "androidx.fragment:fragment-ktx:1.5.1"
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
 
-}
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
+
+
+
+    }
