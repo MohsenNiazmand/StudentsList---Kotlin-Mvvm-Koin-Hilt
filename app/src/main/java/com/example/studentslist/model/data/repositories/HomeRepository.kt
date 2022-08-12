@@ -6,9 +6,7 @@ import io.reactivex.Completable
 
 interface HomeRepository {
 
-    fun refreshStudents(): Completable
-
-
+    suspend fun refreshStudents():List<Student>
     fun getStudents(): LiveData<List<Student>>
 
 }

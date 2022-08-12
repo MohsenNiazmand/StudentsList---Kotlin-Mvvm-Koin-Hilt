@@ -17,5 +17,5 @@ interface StudentDao {
     fun getAll(): LiveData<List<Student>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(student: Student)
+    suspend fun insert(student: Student)
 }

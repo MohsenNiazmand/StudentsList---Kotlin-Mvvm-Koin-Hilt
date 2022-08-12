@@ -13,8 +13,15 @@ class HomeRemoteDataSource @Inject constructor(
 ) : HomeDataSource {
 
 
-    override fun refreshStudents(): Completable =
-        apiService.getStudents().doOnSuccess { studentDao.insertAll(it) }.ignoreElement()
+    //    override fun refreshStudents(): Completable =
+//        apiService.getStudents().doOnSuccess { studentDao.insertAll(it) }.ignoreElement()
+//
+//    override fun getStudents(): LiveData<List<Student>> {
+//        TODO("Not yet implemented")
+//    }
+    override suspend fun refreshStudents(): List<Student> {
+        return apiService.getStudents()
+    }
 
     override fun getStudents(): LiveData<List<Student>> {
         TODO("Not yet implemented")

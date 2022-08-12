@@ -8,9 +8,17 @@ import javax.inject.Inject
 
 class HomeLocalDataSource @Inject constructor(val studentDao: StudentDao):HomeDataSource {
 
-    override fun refreshStudents(): Completable {
+    //    override fun refreshStudents(): Completable {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun getStudents(): LiveData<List<Student>> = studentDao.getAll()
+    override suspend fun refreshStudents(): List<Student> {
         TODO("Not yet implemented")
     }
 
-    override fun getStudents(): LiveData<List<Student>> = studentDao.getAll()
+    override fun getStudents(): LiveData<List<Student>> {
+        return studentDao.getAll()
+    }
+
 }

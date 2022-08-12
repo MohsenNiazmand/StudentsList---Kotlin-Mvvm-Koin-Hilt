@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.studentslist.R
 import com.example.studentslist.viewmodel.AddStudentViewModel
 import com.example.studentslist.model.common.StudentActivity
@@ -16,6 +18,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_student.*
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -28,42 +31,39 @@ class AddStudentActivity : StudentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student)
+
         fab_addNewStudent_save.setOnClickListener(View.OnClickListener {
             if (et_addNewStudent_firstName.length() > 0
                     && et_addNewStudent_lastName.length() > 0
                     && et_addNewStudent_course.length() > 0
                     && et_addNewStudent_score.length() > 0
             ) {
-                addStudentViewModel.save(
-                        et_addNewStudent_firstName.text.toString(),
-                        et_addNewStudent_lastName.text.toString(),
-                        et_addNewStudent_course.text.toString(),
-                        et_addNewStudent_score.text.toString()
-                )
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(object : SingleObserver<Student> {
-                            override fun onSubscribe(d: Disposable) {
-                                compositeDisposable.add(d)
+                lifecycleScope.launch {
+                    try {
+                        addStudentViewModel.save(
+                            et_addNewStudent_firstName.text.toString(),
+                            et_addNewStudent_lastName.text.toString(),
+                            et_addNewStudent_course.text.toString(),
+                            et_addNewStudent_score.text.toString()
+                        ).also {
+                            val intent = Intent(applicationContext, HomeActivity::class.java).apply {
+                                putExtra("student",it)
+                                setResult(Activity.RESULT_OK)
                             }
+                            startActivity(intent)
+                            finish()
+                        }
+                    }catch (e : Exception){
+                        Toast.makeText(this@AddStudentActivity,e.toString(),Toast.LENGTH_SHORT).show()
+                    }
 
-                            override fun onSuccess(t: Student) {
-                                val intent = Intent(applicationContext, HomeActivity::class.java).apply {
-                                    putExtra("student",t)
-                                    setResult(Activity.RESULT_OK)
-                                }
-                                startActivity(intent)
 
-                                finish()
-                            }
+                }
 
-                            override fun onError(e: Throwable) {
-                                Timber.e(e)
-                            }
 
-                        })
             }
         })
+
 
     }
 }

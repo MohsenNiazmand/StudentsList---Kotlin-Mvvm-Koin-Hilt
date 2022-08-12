@@ -6,6 +6,6 @@ import io.reactivex.Completable
 
 interface HomeDataSource {
 
-    fun refreshStudents(): Completable
+   suspend fun refreshStudents():List<Student>
     fun getStudents(): LiveData<List<Student>>
 }

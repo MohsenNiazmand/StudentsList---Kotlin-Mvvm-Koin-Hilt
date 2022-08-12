@@ -13,9 +13,16 @@ class HomeRepositoryImpl @Inject constructor
     @HomeRemoteQualifier private val homeRemoteDataSource: HomeDataSource,
     @HomeLocalQualifier private val homeLocalDataSource: HomeDataSource
 ) : HomeRepository {
-    override fun refreshStudents(): Completable = homeRemoteDataSource.refreshStudents()
+    //    override fun refreshStudents(): Completable = homeRemoteDataSource.refreshStudents()
+//
+//    override fun getStudents(): LiveData<List<Student>> = homeLocalDataSource.getStudents()
+    override suspend fun refreshStudents(): List<Student> {
+        return homeRemoteDataSource.refreshStudents()
+    }
 
-    override fun getStudents(): LiveData<List<Student>> = homeLocalDataSource.getStudents()
+    override fun getStudents(): LiveData<List<Student>> {
+        return homeLocalDataSource.getStudents()
+    }
 
 
 }

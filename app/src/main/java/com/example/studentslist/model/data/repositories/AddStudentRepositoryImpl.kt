@@ -9,11 +9,12 @@ import javax.inject.Inject
 
 class AddStudentRepositoryImpl @Inject constructor(@AddStudentRemoteQualifier private val remoteDataSource: AddStudentDataSource) :
     AddStudentRepository {
-    override fun save(
+    override suspend fun save(
         firstName: String,
         lastName: String,
         course: String,
         score: String
-    ): Single<Student> =
-        remoteDataSource.save(firstName, lastName, course, score)
+    ): Student {
+      return remoteDataSource.save(firstName, lastName, course, score)
+    }
 }

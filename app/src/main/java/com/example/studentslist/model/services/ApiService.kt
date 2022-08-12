@@ -1,5 +1,6 @@
 package com.example.studentslist.model.services
 
+import androidx.lifecycle.LiveData
 import com.example.studentslist.model.data.Student
 import com.google.gson.JsonObject
 import io.reactivex.Single
@@ -11,12 +12,12 @@ interface ApiService{
 
     @GET("experts/student")
 
-    fun getStudents() : Single<List<Student>>
+    suspend fun getStudents() :List<Student>
 
 
     @POST("experts/student")
 
-    fun save(@Body jsonObject: JsonObject) : Single<Student>
+    suspend fun save(@Body jsonObject: JsonObject) : Student
 
 
 
