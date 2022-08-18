@@ -1,69 +1,93 @@
 package com.example.studentslist.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.studentslist.R
-import com.example.studentslist.viewmodel.AddStudentViewModel
 import com.example.studentslist.model.common.StudentActivity
+import com.example.studentslist.model.common.extension.showGenericAlertDialog
+import com.example.studentslist.model.common.extension.showToast
+import com.example.studentslist.model.data.ErrorResponse
 import com.example.studentslist.model.data.Student
+import com.example.studentslist.viewmodel.AddStudentActivityState
+import com.example.studentslist.viewmodel.AddStudentViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_student.*
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class AddStudentActivity : StudentActivity() {
-
-    val compositeDisposable = CompositeDisposable()
     private val addStudentViewModel: AddStudentViewModel by viewModels()
-//    @Inject lateinit var addStudentViewModel:AddStudentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_student)
+        save()
+        observe()
 
-        fab_addNewStudent_save.setOnClickListener(View.OnClickListener {
+    }
+
+    private fun save() {
+
+        fab_addNewStudent_save.setOnClickListener {
             if (et_addNewStudent_firstName.length() > 0
-                    && et_addNewStudent_lastName.length() > 0
-                    && et_addNewStudent_course.length() > 0
-                    && et_addNewStudent_score.length() > 0
+                && et_addNewStudent_lastName.length() > 0
+                && et_addNewStudent_course.length() > 0
+                && et_addNewStudent_score.length() > 0
             ) {
-                lifecycleScope.launch {
-                    try {
-                        addStudentViewModel.save(
-                            et_addNewStudent_firstName.text.toString(),
-                            et_addNewStudent_lastName.text.toString(),
-                            et_addNewStudent_course.text.toString(),
-                            et_addNewStudent_score.text.toString()
-                        ).also {
-                            val intent = Intent(applicationContext, HomeActivity::class.java).apply {
-                                putExtra("student",it)
-                                setResult(Activity.RESULT_OK)
-                            }
-                            startActivity(intent)
-                            finish()
-                        }
-                    }catch (e : Exception){
-                        Toast.makeText(this@AddStudentActivity,e.toString(),Toast.LENGTH_SHORT).show()
-                    }
 
-
-                }
-
-
+                addStudentViewModel.save(
+                    et_addNewStudent_firstName.text.toString(),
+                    et_addNewStudent_lastName.text.toString(),
+                    et_addNewStudent_course.text.toString(),
+                    et_addNewStudent_score.text.toString()
+                )
             }
-        })
+        }
+    }
+
+    private fun observe() {
+        addStudentViewModel.mState
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { state -> handleStateChange(state) }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun handleStateChange(state: AddStudentActivityState) {
+        when (state) {
+            is AddStudentActivityState.Init -> Unit
+            is AddStudentActivityState.ErrorSave -> handleErrorSave(state.rawResponse)
+            is AddStudentActivityState.SuccessSave -> handleSuccessSave(state.student)
+            is AddStudentActivityState.ShowToast -> showToast(state.message)
+            is AddStudentActivityState.IsLoading -> handleLoading(state.isLoading)
+        }
+    }
 
 
+    private fun handleErrorSave(response: ErrorResponse) {
+        showGenericAlertDialog(response.message)
+    }
+
+    private fun handleSuccessSave(studentEntity: Student) {
+        showToast("Welcome ${studentEntity.first_name + " " + studentEntity.last_name}")
+        goToMainActivity()
+    }
+
+
+    private fun goToMainActivity() {
+        startActivity(Intent(this@AddStudentActivity, HomeActivity::class.java))
+        finish()
+    }
+
+    private fun handleLoading(isLoading: Boolean) {
+        fab_addNewStudent_save.isEnabled = !isLoading
+        setProgressIndicator(isLoading)
+        if (!isLoading) {
+            setProgressIndicator(false)
+        }
     }
 }

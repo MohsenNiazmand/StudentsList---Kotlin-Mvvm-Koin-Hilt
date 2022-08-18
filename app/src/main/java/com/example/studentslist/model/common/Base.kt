@@ -10,7 +10,12 @@ import androidx.core.view.children
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.studentslist.R
+import com.example.studentslist.model.common.extension.showGenericAlertDialog
+import com.example.studentslist.model.data.ErrorResponse
+import com.example.studentslist.viewmodel.AddStudentActivityState
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.lang.IllegalStateException
 
 abstract class StudentActivity:AppCompatActivity(),StudentView{
@@ -30,6 +35,7 @@ abstract class StudentActivity:AppCompatActivity(),StudentView{
         }
     override val viewContext: Context?
         get() = this
+
 
 
 }
@@ -56,13 +62,4 @@ interface StudentView{
 }
 
 
-abstract class StudentViewModel:ViewModel(){
-    val compositeDisposable = CompositeDisposable()
-    val progressBarLiveData = MutableLiveData<Boolean>()
 
-
-    override fun onCleared() {
-        compositeDisposable.clear()
-        super.onCleared()
-    }
-}

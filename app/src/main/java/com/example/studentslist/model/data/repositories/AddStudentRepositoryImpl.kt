@@ -1,9 +1,12 @@
 package com.example.studentslist.model.data.repositories
 
 import com.example.studentslist.di.AddStudentRemoteQualifier
+import com.example.studentslist.model.common.BaseResult
+import com.example.studentslist.model.data.ErrorResponse
 import com.example.studentslist.model.data.Student
 import com.example.studentslist.model.data.repositories.sources.AddStudentDataSource
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -14,7 +17,7 @@ class AddStudentRepositoryImpl @Inject constructor(@AddStudentRemoteQualifier pr
         lastName: String,
         course: String,
         score: String
-    ): Student {
-      return remoteDataSource.save(firstName, lastName, course, score)
+    ): Flow<BaseResult<Student, ErrorResponse>> {
+        return remoteDataSource.save(firstName, lastName, course, score)
     }
 }

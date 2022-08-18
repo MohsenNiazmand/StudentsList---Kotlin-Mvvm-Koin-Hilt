@@ -42,4 +42,13 @@
         android:text="@string/main_addStudent"
         app:icon="@drawable/ic_add_white_24dp"/>
 
+    <TextView
+        android:id="@+id/tvEmptyList"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/the_list_is_empty"
+        android:textSize="42sp"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

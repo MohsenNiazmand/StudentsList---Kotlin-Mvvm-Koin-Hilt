@@ -20,12 +20,11 @@ class StudentAdapter() : RecyclerView.Adapter<StudentAdapter.ViewHolder>() {
         }
 
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val fullNameTv = itemView.findViewById<TextView>(R.id.tv_student_fullName)
         val courseTitleTv = itemView.findViewById<TextView>(R.id.tv_student_course)
         val scoreTv = itemView.findViewById<TextView>(R.id.tv_student_score)
         val firstCharacterTv = itemView.findViewById<TextView>(R.id.tv_student_firstCharacter)
-
 
 
         fun bindStudent(student: Student) {
@@ -33,7 +32,7 @@ class StudentAdapter() : RecyclerView.Adapter<StudentAdapter.ViewHolder>() {
             courseTitleTv.text = student.course
             scoreTv.text = student.score.toString()
             firstCharacterTv.text = student.first_name.substring(0, 1)
-            itemView.implementSpringAnimationTrait()
+//            itemView.implementSpringAnimationTrait()
             itemView.setOnClickListener {
 
             }
@@ -44,7 +43,7 @@ class StudentAdapter() : RecyclerView.Adapter<StudentAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_student,parent,false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_student, parent, false)
         )
     }
 
@@ -55,8 +54,8 @@ class StudentAdapter() : RecyclerView.Adapter<StudentAdapter.ViewHolder>() {
     override fun getItemCount(): Int = students.size
 
 
-    fun addStudent(student: Student){
-        this.students.add(0,student)
+    fun addStudent(student: Student) {
+        this.students.add(0, student)
         notifyItemInserted(0)
     }
 }

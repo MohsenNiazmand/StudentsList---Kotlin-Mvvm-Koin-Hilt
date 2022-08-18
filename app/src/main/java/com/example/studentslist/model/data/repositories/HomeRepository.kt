@@ -1,12 +1,13 @@
 package com.example.studentslist.model.data.repositories
 
-import androidx.lifecycle.LiveData
+import com.example.studentslist.model.common.BaseResult
+import com.example.studentslist.model.data.ErrorResponse
 import com.example.studentslist.model.data.Student
-import io.reactivex.Completable
+import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
 
-    suspend fun refreshStudents():List<Student>
-    fun getStudents(): LiveData<List<Student>>
+    suspend fun refreshStudents(): Flow<BaseResult<List<Student>, ErrorResponse>>
+    fun getStudents(): Flow<List<Student>>
 
 }

@@ -7,12 +7,12 @@ import androidx.room.RoomDatabase
 import com.example.studentslist.model.data.Student
 
 
-@Database(entities = [Student::class],version = 1,exportSchema = false)
-abstract class AppDatabase:RoomDatabase() {
+@Database(entities = [Student::class], version = 1, exportSchema = false)
+abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun studentDao() : StudentDao
+    abstract fun studentDao(): StudentDao
 
-    companion object{
+    companion object {
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
@@ -24,15 +24,18 @@ abstract class AppDatabase:RoomDatabase() {
             }
 
             synchronized(this) {
-                val instance = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "students_db")
-                        .fallbackToDestructiveMigration()
-                        .build()
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "students_db"
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
 
                 INSTANCE = instance
                 return instance
             }
         }
-
 
 
     }
